@@ -1,0 +1,31 @@
+# Ignorar entornos virtuales
+.venv/
+venv/
+
+# Ignorar archivos de configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de Python compilados
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignorar salidas de PyInstaller
+dist/
+build/
+*.spec
+
+# Ignorar archivos de logs y temporales
+*.log
+*.tmp
+
+# Ignorar archivos de Excel generados
+*.xlsx
+
+# Ignorar configuraciones de IDE
+.vscode/
+.idea/
+
+# Ignorar archivos de configuración sensibles
+.env
