@@ -265,18 +265,22 @@ class PDFExtractorApp(QMainWindow):
             if contacto_match:
                 data["Nombre contacto"] = contacto_match.group(1).strip()
             
-            # Extraer Teléfono y formatear
-            telefono_match = re.search(r'F:\s*(\d+)', cliente_text, re.IGNORECASE)
+            # Extraer Teléfono y corregir formato
+            telefono_match = re.search(
+                r'F:\s*[:\-]?\s*(\d[\d\s\-]*)', cliente_text, re.IGNORECASE)
             if telefono_match:
                 numero = telefono_match.group(1).strip()
-                # Formatear el número al formato internacional +569 XXXXXXXX
+                # Eliminar cualquier carácter no numérico excepto los dígitos
+                numero = re.sub(r'\D', '', numero)
                 if len(numero) == 9 and numero.startswith('9'):
+                    # Formato correcto para números de 9 dígitos
                     data["Teléfono"] = f"+569 {numero[1:]}"
                 elif len(numero) == 8:
+                    # Formato correcto para números de 8 dígitos
                     data["Teléfono"] = f"+569 {numero}"
                 else:
-                    # Si el formato es diferente, guardamos el número sin cambios
-                    data["Teléfono"] = numero
+                    # Si el formato es diferente, guardar el número sin cambios
+                    data["Teléfono"] = f"+56 {numero}"
         
         # Si no encontramos datos suficientes en la sección del cliente, hacer una búsqueda más general
         if not data["RUT"]:
